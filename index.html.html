@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>F1 2026 · Relatório Completo</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --ink:#0e0e0e;--ink2:#1c1c1c;
+  --page:#f5f2ed;--page2:#ede9e2;--page3:#e4dfd6;
+  --red:#c8102e;--red-soft:#f5e6e9;
+  --gold:#b8860b;--gold-soft:#f7f0e0;
+  --muted:#8a7f72;--rule:#c8b89a;--white:#fff;
+}
+html,body{width:100%;min-height:100vh;background:var(--page);color:var(--ink);font-family:'DM Sans',sans-serif}
+
+/* ── MASTHEAD ── */
+.masthead{background:var(--ink);color:var(--white);position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.4)}
+.masthead-top{display:flex;align-items:stretch;border-bottom:1px solid #2a2a2a}
+.flag{background:var(--red);padding:14px 20px;display:flex;align-items:center;flex-shrink:0}
+.flag-f1{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:#fff;line-height:1}
+.flag-yr{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.6);letter-spacing:3px;margin-top:1px}
+.mhead-info{flex:1;padding:14px 16px;display:flex;flex-direction:column;justify-content:center}
+.mhead-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:900;color:#fff;text-transform:uppercase}
+.mhead-sub{font-size:10px;color:rgba(255,255,255,.4);letter-spacing:2px;margin-top:2px;text-transform:uppercase}
+.mhead-rd{padding:14px 16px;display:flex;flex-direction:column;justify-content:center;text-align:right;font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,.4);letter-spacing:1px;flex-shrink:0}
+.mhead-rd strong{color:rgba(255,255,255,.8);font-size:11px;display:block;margin-bottom:2px}
+
+/* NAV — horizontal scroll on mobile */
+.nav-wrap{display:flex;overflow-x:auto;border-top:1px solid #2a2a2a;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.nav-wrap::-webkit-scrollbar{display:none}
+.nav-btn{padding:12px 18px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);cursor:pointer;border-bottom:2px solid transparent;font-family:'DM Mono',monospace;white-space:nowrap;background:none;border-top:none;border-left:none;border-right:none;transition:all .2s;flex-shrink:0}
+.nav-btn:hover{color:rgba(255,255,255,.8)}
+.nav-btn.active{color:#fff;border-bottom-color:var(--red)}
+
+.tab-content{display:none}.tab-content.active{display:block}
+
+/* ── BODY ── */
+.body{max-width:1100px;margin:0 auto;padding:24px 16px}
+@media(min-width:768px){.body{padding:36px 24px}}
+
+/* ── HEADLINE ── */
+.headline{border-bottom:3px solid var(--ink);padding-bottom:16px;margin-bottom:24px}
+.kicker{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+.h1{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;line-height:1.1;letter-spacing:-.5px}
+@media(min-width:768px){.h1{font-size:40px;letter-spacing:-1px}}
+.h1 em{font-style:italic;color:var(--red)}
+.deck{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.6;font-weight:300}
+@media(min-width:768px){.deck{font-size:14px;max-width:600px}}
+
+/* ── STATS BAR ── */
+.stats-bar{display:grid;grid-template-columns:repeat(2,1fr);border:1.5px solid var(--ink);margin-bottom:24px;background:var(--white)}
+@media(min-width:600px){.stats-bar{grid-template-columns:repeat(4,1fr)}}
+.stat{padding:14px 16px;border-right:1px solid var(--ink2);border-bottom:1px solid var(--ink2)}
+@media(min-width:600px){.stat{border-bottom:none}}
+.stat:nth-child(2n){border-right:none}
+@media(min-width:600px){.stat:nth-child(2n){border-right:1px solid var(--ink2)}.stat:last-child{border-right:none}}
+.stat-n{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;line-height:1}
+@media(min-width:768px){.stat-n{font-size:42px}}
+.stat-n.red{color:var(--red)}.stat-n.gold{color:var(--gold)}
+.stat-lbl{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.stat-note{font-size:10px;color:var(--muted);margin-top:2px;font-weight:300}
+
+/* ── ALERT ── */
+.alert{background:var(--red);color:#fff;padding:12px 16px;display:flex;align-items:flex-start;gap:10px;margin-bottom:24px}
+.alert-lbl{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;background:rgba(255,255,255,.2);padding:3px 7px;flex-shrink:0;margin-top:1px}
+.alert-txt{font-size:12px;font-weight:500;line-height:1.5}
+@media(min-width:768px){.alert-txt{font-size:13px}}
+
+/* ── SECTION RULE ── */
+.rule{display:flex;align-items:center;gap:10px;margin:28px 0 16px}
+.rule-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;white-space:nowrap;font-weight:500}
+.rule-line{flex:1;height:1.5px;background:var(--ink)}
+.rule-num{font-family:'Playfair Display',serif;font-size:12px;color:var(--muted);white-space:nowrap}
+
+/* ── PENALTY CARDS — 1 col mobile, 3 col desktop ── */
+.pen-grid{display:grid;grid-template-columns:1fr;gap:1.5px;background:var(--ink);border:1.5px solid var(--ink);margin-bottom:28px}
+@media(min-width:768px){.pen-grid{grid-template-columns:repeat(3,1fr)}}
+.pen-card{background:var(--white);padding:18px;position:relative;overflow:hidden;transition:background .15s}
+.pen-card:active{background:#faf8f5}
+@media(min-width:768px){.pen-card:hover{background:#faf8f5}}
+.pen-accent{position:absolute;top:0;left:0;right:0;height:4px}
+.pen-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+.pen-driver{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;line-height:1.1}
+.pen-team{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.pen-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:900;opacity:.07;line-height:1;margin-top:-6px}
+.pen-badge{display:inline-flex;padding:4px 10px;font-family:'DM Mono',monospace;font-size:9px;font-weight:500;letter-spacing:1px;margin-bottom:8px;border:1px solid currentColor}
+.b-red{color:var(--red);background:var(--red-soft)}.b-orange{color:#b85c00;background:#fff3e6;border-color:#b85c00}
+.b-yellow{color:var(--gold);background:var(--gold-soft)}.b-green{color:#2e7d32;background:#e8f5e9;border-color:#2e7d32}
+.b-blue{color:#1565c0;background:#e3f2fd;border-color:#1565c0}
+.pen-race{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:4px}
+.pen-reason{font-size:12px;color:var(--muted);line-height:1.55;font-weight:300;border-top:1px solid var(--page3);padding-top:10px;margin-top:6px}
+.pen-pts{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--page3);flex-wrap:wrap;gap:4px}
+.pen-pts-lbl{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--muted);text-transform:uppercase}
+.pen-pts-val{font-family:'DM Mono',monospace;font-size:11px;font-weight:500}
+
+/* ── CHAMPIONSHIP ROWS ── */
+.champ-table{border:1.5px solid var(--ink);background:var(--ink);margin-bottom:28px}
+.champ-row{background:var(--white);display:grid;align-items:center;border-bottom:1px solid var(--page3);transition:background .15s}
+.champ-row:last-child{border-bottom:none}
+.champ-row:active{background:#faf8f5}
+@media(min-width:768px){.champ-row:hover{background:#faf8f5}}
+
+/* Drivers: mobile 3-col, desktop 4-col */
+.champ-row.dr{grid-template-columns:40px 1fr 72px}
+@media(min-width:600px){.champ-row.dr{grid-template-columns:48px 1fr 160px 100px}}
+.cr-rank{padding:12px 10px;font-family:'Playfair Display',serif;font-size:18px;font-weight:900;color:var(--muted);text-align:center;border-right:1px solid var(--page3)}
+@media(min-width:600px){.cr-rank{font-size:20px;padding:14px 12px}}
+.cr-rank.top{color:var(--ink)}
+.cr-info{padding:12px 14px;border-right:1px solid var(--page3)}
+@media(min-width:600px){.cr-info{padding:14px 16px}}
+.cr-name{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;display:flex;align-items:center;gap:7px}
+@media(min-width:600px){.cr-name{font-size:16px}}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.cr-team{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.cr-detail{font-size:10px;color:var(--muted);margin-top:3px;font-weight:300;display:none}
+@media(min-width:600px){.cr-detail{display:block}}
+.cr-bar{padding:14px 14px;border-right:1px solid var(--page3);display:none}
+@media(min-width:600px){.cr-bar{display:block}}
+.cr-bar-track{height:4px;background:var(--page3);overflow:hidden;margin-bottom:4px}
+.cr-bar-fill{height:100%;transition:width .9s cubic-bezier(.4,0,.2,1)}
+.cr-bar-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--muted)}
+.cr-pts{padding:12px 12px;text-align:center}
+@media(min-width:600px){.cr-pts{padding:14px 16px}}
+.cr-pts-big{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;line-height:1}
+@media(min-width:600px){.cr-pts-big{font-size:30px}}
+.cr-pts-sub{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--muted);margin-top:2px;text-transform:uppercase}
+.c1{color:var(--gold)}.c2{color:#888}.c3{color:#b8733a}
+
+/* Constructors: mobile 3-col, desktop 6-col */
+.champ-row.ct{grid-template-columns:40px 1fr 72px}
+@media(min-width:600px){.champ-row.ct{grid-template-columns:48px 1fr 64px 64px 160px 100px}}
+.ct-col{padding:14px 12px;border-right:1px solid var(--page3);font-family:'DM Mono',monospace;font-size:11px;text-align:center;color:var(--muted);display:none}
+@media(min-width:600px){.ct-col{display:block}}
+.ct-drivers{font-size:10px;color:var(--muted);margin-top:3px;font-weight:300;display:none}
+@media(min-width:600px){.ct-drivers{display:block}}
+
+/* ── RESULTS — 1 col mobile, 3 col desktop ── */
+.res-grid{display:grid;grid-template-columns:1fr;gap:1.5px;background:var(--ink);border:1.5px solid var(--ink);margin-bottom:28px}
+@media(min-width:600px){.res-grid{grid-template-columns:repeat(3,1fr)}}
+.gp-card{background:var(--white);padding:18px}
+.gp-card.done{background:var(--page2)}.gp-card.current{background:#fff8e1}
+.gp-rnd{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.gp-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;margin-bottom:12px;line-height:1.2}
+.gp-podium{display:flex;flex-direction:column;gap:7px}
+.pod-row{display:flex;align-items:center;gap:10px}
+.pod-pos{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;min-width:24px;line-height:1}
+.pod-pos.p1{color:var(--gold)}.pod-pos.p2{color:#888}.pod-pos.p3{color:#b8733a}
+.pod-driver{font-size:13px;font-weight:500}
+.pod-team{font-size:10px;color:var(--muted);font-weight:300}
+.pod-gap{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto}
+.gp-fl{margin-top:10px;padding-top:8px;border-top:1px solid var(--page3);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--muted)}
+.gp-tbc{padding:20px 0;text-align:center;font-family:'Playfair Display',serif;font-size:15px;font-style:italic;color:var(--muted)}
+
+/* ── CALENDAR — 1 col mobile, 3 col desktop ── */
+.cal-grid{display:grid;grid-template-columns:1fr;gap:1.5px;background:var(--ink);border:1.5px solid var(--ink)}
+@media(min-width:600px){.cal-grid{grid-template-columns:repeat(3,1fr)}}
+.cal-card{background:var(--white);padding:16px 18px;transition:background .15s}
+.cal-card.done{background:var(--page2)}.cal-card.current{background:#fff8e1}.cal-card.cancelled{opacity:.45}
+.cal-rnd{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:4px}
+.cal-gp{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;line-height:1.2;margin-bottom:2px}
+.cal-circuit{font-size:11px;color:var(--muted);font-weight:300;margin-bottom:8px}
+.cal-date{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;margin-bottom:7px}
+.pill{display:inline-flex;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border:1px solid currentColor}
+.p-done{color:#2e7d32;background:#e8f5e9;border-color:#2e7d32}
+.p-live{color:var(--gold);background:var(--gold-soft);border-color:var(--gold)}
+.p-fut{color:var(--muted);background:var(--page2);border-color:var(--page3)}
+.p-can{color:var(--red);background:var(--red-soft);border-color:var(--red)}
+.cal-pen{font-size:11px;color:var(--red);font-weight:500;margin-top:8px;line-height:1.4;border-top:1px solid var(--page3);padding-top:8px}
+.cal-pen.empty{color:var(--muted);font-weight:300}
+
+/* ── SESSION ── */
+.session-ph{text-align:center;padding:48px 20px;border:1.5px dashed var(--rule)}
+.session-ph p{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--muted);margin-bottom:12px}
+.session-ph small{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--rule);text-transform:uppercase}
+.btn{background:var(--ink);color:var(--white);border:none;padding:12px 22px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .2s;margin-top:14px;min-height:44px}
+.btn:hover,.btn:active{background:var(--red)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.spin{animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.s-row{display:grid;grid-template-columns:1fr;gap:1.5px;background:var(--ink);border:1.5px solid var(--ink);margin-bottom:18px}
+@media(min-width:600px){.s-row{grid-template-columns:repeat(3,1fr)}}
+.s-cell{background:var(--white);padding:16px 18px}
+.s-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:4px}
+.s-val{font-family:'Playfair Display',serif;font-size:20px;font-weight:700}
+.s-sub{font-size:11px;color:var(--muted);margin-top:2px;font-weight:300}
+.dt-grid{border:1.5px solid var(--ink);background:var(--ink);display:grid;grid-template-columns:repeat(2,1fr);gap:1.5px}
+@media(min-width:600px){.dt-grid{grid-template-columns:repeat(4,1fr)}}
+.dt-pill{background:var(--white);padding:10px 12px;display:flex;align-items:center;gap:8px}
+.dt-bar{width:3px;height:26px;flex-shrink:0}
+.dt-name{font-size:12px;font-weight:500;line-height:1.2}
+.dt-meta{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--muted);margin-top:1px}
+
+/* ── LAP TIMES ── */
+.laps-controls{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.laps-select{background:var(--white);border:1.5px solid var(--ink);padding:10px 14px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;color:var(--ink);cursor:pointer;appearance:none;min-width:200px;outline:none}
+.laps-select:focus{border-color:var(--red)}
+.laps-btn{background:var(--ink);color:var(--white);border:none;padding:10px 18px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:background .2s;min-height:44px}
+.laps-btn:hover,.laps-btn:active{background:var(--red)}
+.laps-btn:disabled{opacity:.4;cursor:not-allowed}
+.laps-ph{text-align:center;padding:48px 20px;border:1.5px dashed var(--rule)}
+.laps-ph p{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--muted);margin-bottom:8px}
+.laps-ph small{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--rule);text-transform:uppercase}
+.laps-two-col{display:grid;grid-template-columns:1fr;gap:20px}
+@media(min-width:768px){.laps-two-col{grid-template-columns:340px 1fr}}
+.laps-ranking{border:1.5px solid var(--ink);background:var(--ink)}
+.lap-row{background:var(--white);display:grid;grid-template-columns:36px 1fr 90px;align-items:center;border-bottom:1px solid var(--page3);transition:background .15s;cursor:pointer}
+.lap-row:last-child{border-bottom:none}
+.lap-row:hover,.lap-row.selected{background:var(--page2)}
+.lap-row.selected{border-left:3px solid var(--red)}
+.lap-pos{padding:11px 10px;font-family:'Playfair Display',serif;font-size:16px;font-weight:900;color:var(--muted);text-align:center}
+.lap-pos.top{color:var(--ink)}
+.lap-info{padding:11px 14px;border-left:1px solid var(--page3)}
+.lap-driver{font-size:13px;font-weight:500;line-height:1.2}
+.lap-team{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.lap-time-col{padding:11px 12px;text-align:right}
+.lap-time{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--ink)}
+.lap-time.fastest{color:var(--red)}
+.lap-gap-small{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);margin-top:2px}
+.chart-wrap{background:var(--white);border:1.5px solid var(--ink);padding:20px}
+.chart-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.chart-canvas-wrap{position:relative;width:100%;height:280px}
+@media(min-width:768px){.chart-canvas-wrap{height:340px}}
+.laps-loading{display:flex;align-items:center;justify-content:center;padding:60px 20px;gap:10px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase}
+.laps-error{border:1.5px solid var(--red);padding:20px 22px}
+.laps-note{font-size:11px;color:var(--muted);margin-top:14px;line-height:1.6;font-weight:300;font-style:italic}
+
+.footer{background:var(--ink);color:rgba(255,255,255,.4);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:14px 16px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+@media(min-width:768px){.footer{padding:14px 24px}}
+.footer span{color:rgba(255,255,255,.6)}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-top">
+    <div class="flag">
+      <div><div class="flag-f1">F1</div><div class="flag-yr">2026</div></div>
+    </div>
+    <div class="mhead-info">
+      <div class="mhead-title">Relatório da Temporada</div>
+      <div class="mhead-sub">Penalidades · Classificações</div>
+    </div>
+    <div class="mhead-rd">
+      <strong id="updateDate">Mar 2026</strong>
+      <span id="updateRound">Rd 3 · Japão</span>
+    </div>
+  </div>
+  <div class="nav-wrap">
+    <button class="nav-btn active" onclick="switchTab('penalties',this)">Penalidades</button>
+    <button class="nav-btn" onclick="switchTab('drivers',this)">Pilotos</button>
+    <button class="nav-btn" onclick="switchTab('constructors',this)">Construtores</button>
+    <button class="nav-btn" onclick="switchTab('results',this)">Resultados</button>
+    <button class="nav-btn" onclick="switchTab('licence',this)">Licença</button>
+    <button class="nav-btn" onclick="switchTab('calendar',this)">Calendário</button>
+    <button class="nav-btn" onclick="switchTab('laps',this)">Voltas Rápidas</button>
+    <button class="nav-btn" onclick="switchTab('session',this)">Sessão ao Vivo</button>
+  </div>
+</div>
+
+<!-- PENALIDADES -->
+<div id="tab-penalties" class="tab-content active">
+  <div class="body">
+    <div class="headline">
+      <div class="kicker">Temporada 2026 · Edição especial</div>
+      <div class="h1">As penalidades que<br><em>definem a temporada</em></div>
+      <div class="deck">Cada decisão dos comissários, os pilotos em risco de race ban e o impacto no campeonato. Próxima etapa: Miami (01–03 Mai).</div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat"><div class="stat-n red">3</div><div class="stat-lbl">Penalidades</div><div class="stat-note">Em 3 etapas</div></div>
+      <div class="stat"><div class="stat-n">14</div><div class="stat-lbl">Com pts ativos</div><div class="stat-note">carry-over + 2026</div></div>
+      <div class="stat"><div class="stat-n gold">10</div><div class="stat-lbl">Bearman</div><div class="stat-note">A 2 pts do ban</div></div>
+      <div class="stat"><div class="stat-n">22</div><div class="stat-lbl">Etapas</div><div class="stat-note">+2 canceladas</div></div>
+    </div>
+    <div class="alert">
+      <div class="alert-lbl">⚠</div>
+      <div class="alert-txt"><strong>Race ban iminente:</strong> Oliver Bearman (Haas) com 10 pts na licença — a 2 pts do ban. Sofreu acidente grave (50G) no Japão e abandonou. Em risco até o GP do Canadá.</div>
+    </div>
+    <div class="rule"><div class="rule-lbl">Incidentes</div><div class="rule-line"></div><div class="rule-num">5 registros</div></div>
+    <div class="pen-grid" id="penGrid"></div>
+  </div>
+</div>
+
+<!-- PILOTOS -->
+<div id="tab-drivers" class="tab-content">
+  <div class="body">
+    <div class="headline">
+      <div class="kicker">Mundial de Pilotos · 2026</div>
+      <div class="h1">Corrida pelo<br><em>título mundial</em></div>
+      <div class="deck">Classificação após 2 etapas. GP do Japão (Rd 3) — 29/03.</div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat"><div class="stat-n" style="font-size:22px;margin-top:6px">Antonelli</div><div class="stat-lbl">Líder</div><div class="stat-note">Mercedes · #12</div></div>
+      <div class="stat"><div class="stat-n red">72</div><div class="stat-lbl">Pontos</div><div class="stat-note">Após Rd 3</div></div>
+      <div class="stat"><div class="stat-n">9</div><div class="stat-lbl">Vantagem</div><div class="stat-note">Sobre Russell</div></div>
+      <div class="stat"><div class="stat-n gold">3</div><div class="stat-lbl">Etapas</div><div class="stat-note">AUS · CHN · JPN</div></div>
+    </div>
+    <div class="rule"><div class="rule-lbl">Classificação</div><div class="rule-line"></div><div class="rule-num">após Rd 3</div></div>
+    <div class="champ-table" id="driversTable"></div>
+  </div>
+</div>
+
+<!-- CONSTRUTORES -->
+<div id="tab-constructors" class="tab-content">
+  <div class="body">
+    <div class="headline">
+      <div class="kicker">Mundial de Construtores · 2026</div>
+      <div class="h1">A batalha<br><em>entre as equipes</em></div>
+      <div class="deck">Mercedes domina. Ferrari é a maior ameaça. Haas surpreende no top 3.</div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat"><div class="stat-n" style="font-size:20px;margin-top:8px">Mercedes</div><div class="stat-lbl">Líder</div><div class="stat-note">3 vitórias em 3</div></div>
+      <div class="stat"><div class="stat-n red">135</div><div class="stat-lbl">Pontos</div><div class="stat-note">Após Rd 3</div></div>
+      <div class="stat"><div class="stat-n">45</div><div class="stat-lbl">Vantagem</div><div class="stat-note">Sobre Ferrari</div></div>
+      <div class="stat"><div class="stat-n gold">10</div><div class="stat-lbl">Equipes</div><div class="stat-note">Cadillac estreante</div></div>
+    </div>
+    <div class="rule"><div class="rule-lbl">Classificação</div><div class="rule-line"></div><div class="rule-num">após Rd 3</div></div>
+    <div class="champ-table" id="ctorsTable"></div>
+  </div>
+</div>
+
+<!-- RESULTADOS -->
+<div id="tab-results" class="tab-content">
+  <div class="body">
+    <div class="headline">
+      <div class="kicker">Resultados · 2026</div>
+      <div class="h1">Pódios de<br><em>cada corrida</em></div>
+      <div class="deck">Mercedes vence as 3 primeiras etapas. Antonelli com dobradinha (China + Japão) assume a liderança do mundial.</div>
+    </div>
+    <div class="rule"><div class="rule-lbl">Corridas disputadas</div><div class="rule-line"></div><div class="rule-num">3 de 22</div></div>
+    <div class="res-grid" id="resultsGrid"></div>
+  </div>
+</div>
+
+<!-- LICENÇA -->
+<div id="tab-licence" class="tab-content">
+  <div class="body">
+    <div class="headline">
+      <div class="kicker">Super licença · FIA</div>
+      <div class="h1">Quem está<br><em>mais perto do ban</em></div>
+      <div class="deck">12 pontos em 12 meses = ban automático de uma corrida.</div>
+    </div>
+    <div class="champ-table" id="licTable"></div>
+  </div>
+</div>
+
+<!-- CALENDÁRIO -->
+<div id="tab-calendar" class="tab-content">
+  <div class="body">
+    <div class="headline">
+      <div class="kicker">Calendário · 2026</div>
+      <div class="h1">22 GPs,<br><em>uma temporada histórica</em></div>
+      <div class="deck">Regulamento novo, dois GPs cancelados por conflito no Oriente Médio.</div>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+  </div>
+</div>
+
+<!-- VOLTAS RÁPIDAS -->
+<div id="tab-laps" class="tab-content">
+  <div class="body">
+    <div class="headline">
+      <div class="kicker">OpenF1 API · Telemetria</div>
+      <div class="h1">Voltas rápidas<br><em>por piloto e corrida</em></div>
+      <div class="deck">Ranking das melhores voltas de cada piloto + evolução dos tempos ao longo da corrida. Dados via API OpenF1.</div>
+    </div>
+    <div class="laps-controls">
+      <select class="laps-select" id="lapsSessionSelect">
+        <option value="">— Selecione uma corrida —</option>
+      </select>
+      <button class="laps-btn" id="lapsLoadBtn" onclick="loadLaps()" disabled>
+        <span id="lapsIcon">↻</span> Carregar voltas
+      </button>
+    </div>
+    <div id="lapsData">
+      <div class="laps-ph">
+        <p>Selecione uma corrida acima</p>
+        <small>Os dados são carregados via API OpenF1</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SESSÃO AO VIVO -->
+<div id="tab-session" class="tab-content">
+  <div class="body">
+    <div class="headline">
+      <div class="kicker">OpenF1 API · Ao vivo</div>
+      <div class="h1">Última sessão<br><em>ao vivo</em></div>
+      <div class="deck">Dados em tempo real via API oficial OpenF1.</div>
+    </div>
+    <div id="sessionData">
+      <div class="session-ph">
+        <p>Aguardando conexão</p>
+        <small>Toque para buscar dados</small><br>
+        <button class="btn" id="refreshBtn" onclick="loadSession()"><span id="refreshIcon">↻</span> Buscar ao vivo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <span>F1 2026 · Relatório Completo</span>
+  <span id="footerTxt">OpenF1 · FIA · Formula1.com</span>
+</div>
+
+<script>
+const PENALTIES=[
+  {driver:'Franco Colapinto',team:'Alpine',number:'43',color:'#FF87BC',race:'GP Austrália · Rd 1',session:'Corrida',type:'STOP-GO 10s',bc:'b-red',reason:'Mecânicos tocaram o carro após o sinal de 15 segundos. Penalidade obrigatória — Art. B5.5.5 a)i).',ptsLabel:'0 pts — infração da equipe'},
+  {driver:'Kimi Antonelli',team:'Mercedes',number:'12',color:'#00D2BE',race:'GP China · Rd 2',session:'Sprint Race',type:'+10 SEGUNDOS',bc:'b-orange',reason:'Colisão com Hadjar na curva 6, volta 1. Travou roda traseira ao ápice.',ptsLabel:'+1 pt → 6 pts na licença'},
+  {driver:'Sergio Pérez',team:'Cadillac',number:'11',color:'#6692FF',race:'GP China · Rd 2',session:'Sprint Race',type:'+5 SEGUNDOS',bc:'b-yellow',reason:'Abaixo do delta mínimo do Safety Car em 2 mini-setores — Art. B5.13.2b.',ptsLabel:'0 pts novos — 5 carry-over'},
+  {driver:'Alex Albon',team:'Williams',number:'23',color:'#64C4FF',race:'GP China · Rd 2',session:'Corrida',type:'LARGADA DOS BOXES',bc:'b-blue',reason:'Modificação no carro em parc fermé — obrigado a largar da pit lane.',ptsLabel:'0 pts novos — 3 carry-over'},
+  {driver:'Kimi Antonelli',team:'Mercedes',number:'12',color:'#00D2BE',race:'GP Austrália · Rd 1',session:'Classificação',type:'ABSOLVIDO',bc:'b-green',reason:'Ventilador caiu na pista. Comissários: equipe agiu corretamente.',ptsLabel:'Absolvido — sem penalidade'},
+];
+
+const DRIVERS=[
+  {pos:1,driver:'Kimi Antonelli',team:'Mercedes',color:'#00D2BE',pts:72,note:'2º AUS · 1º CHN · 1º JPN'},
+  {pos:2,driver:'George Russell',team:'Mercedes',color:'#00D2BE',pts:63,note:'1º AUS · 2º CHN · 4º JPN'},
+  {pos:3,driver:'Charles Leclerc',team:'Ferrari',color:'#E8002D',pts:49,note:'3º AUS · 4º CHN · 3º JPN'},
+  {pos:4,driver:'Oscar Piastri',team:'McLaren',color:'#FF8000',pts:43,note:'DNS AUS · DNS CHN · 2º JPN'},
+  {pos:5,driver:'Lewis Hamilton',team:'Ferrari',color:'#E8002D',pts:37,note:'4º AUS · 3º CHN · 6º JPN'},
+  {pos:6,driver:'Lando Norris',team:'McLaren',color:'#FF8000',pts:28,note:'DNS CHN · 5º JPN'},
+  {pos:7,driver:'Oliver Bearman',team:'Haas',color:'#B6BABD',pts:18,note:'5º AUS · RET JPN (acidente)'},
+  {pos:8,driver:'Max Verstappen',team:'Red Bull',color:'#3671C6',pts:18,note:'6º AUS · 8º JPN'},
+  {pos:9,driver:'Pierre Gasly',team:'Alpine',color:'#FF87BC',pts:14,note:'7º JPN'},
+  {pos:10,driver:'Isack Hadjar',team:'Red Bull',color:'#3671C6',pts:12,note:''},
+  {pos:11,driver:'Esteban Ocon',team:'Haas',color:'#B6BABD',pts:10,note:''},
+  {pos:12,driver:'Carlos Sainz',team:'Williams',color:'#64C4FF',pts:6,note:''},
+  {pos:13,driver:'Lance Stroll',team:'Aston Martin',color:'#229971',pts:4,note:'RET JPN (pressão água)'},
+  {pos:14,driver:'Fernando Alonso',team:'Aston Martin',color:'#229971',pts:3,note:'18º JPN · 1 volta atrás'},
+  {pos:15,driver:'Gabriel Bortoleto',team:'Audi',color:'#2293D1',pts:2,note:''},
+  {pos:16,driver:'Alex Albon',team:'Williams',color:'#64C4FF',pts:0,note:''},
+  {pos:17,driver:'Nico Hülkenberg',team:'Audi',color:'#2293D1',pts:0,note:''},
+  {pos:18,driver:'Sergio Pérez',team:'Cadillac',color:'#6692FF',pts:0,note:''},
+  {pos:19,driver:'Valtteri Bottas',team:'Cadillac',color:'#6692FF',pts:0,note:''},
+  {pos:20,driver:'Liam Lawson',team:'Red Bull',color:'#3671C6',pts:0,note:'RET JPN'},
+];
+
+const CONSTRUCTORS=[
+  {pos:1,team:'Mercedes',color:'#00D2BE',engine:'Mercedes',drivers:'Russell · Antonelli',pts:135,wins:3,podiums:6},
+  {pos:2,team:'Ferrari',color:'#E8002D',engine:'Ferrari',drivers:'Leclerc · Hamilton',pts:90,wins:0,podiums:3},
+  {pos:3,team:'McLaren',color:'#FF8000',engine:'Mercedes',drivers:'Norris · Piastri',pts:56,wins:0,podiums:1},
+  {pos:4,team:'Red Bull',color:'#3671C6',engine:'Ford RBPT',drivers:'Verstappen · Hadjar',pts:30,wins:0,podiums:0},
+  {pos:5,team:'Haas',color:'#B6BABD',engine:'Ferrari',drivers:'Bearman · Ocon',pts:28,wins:0,podiums:0},
+  {pos:6,team:'Alpine',color:'#FF87BC',engine:'Mercedes',drivers:'Gasly · Colapinto',pts:22,wins:0,podiums:0},
+  {pos:7,team:'Aston Martin',color:'#229971',engine:'Honda',drivers:'Alonso · Stroll',pts:7,wins:0,podiums:0},
+  {pos:8,team:'Williams',color:'#64C4FF',engine:'Mercedes',drivers:'Sainz · Albon',pts:6,wins:0,podiums:0},
+  {pos:9,team:'Audi',color:'#2293D1',engine:'Audi',drivers:'Hülkenberg · Bortoleto',pts:2,wins:0,podiums:0},
+  {pos:10,team:'Cadillac',color:'#6692FF',engine:'Ferrari',drivers:'Pérez · Bottas',pts:0,wins:0,podiums:0},
+];
+
+const RESULTS=[
+  {rnd:1,gp:'GP da Austrália',status:'done',
+   p1:{driver:'George Russell',team:'Mercedes',gap:'1:23:06.801'},
+   p2:{driver:'Kimi Antonelli',team:'Mercedes',gap:'+2.974'},
+   p3:{driver:'Charles Leclerc',team:'Ferrari',gap:'+15.519'},fl:'Verstappen · 1:22.091'},
+  {rnd:2,gp:'GP da China',status:'done',
+   p1:{driver:'Kimi Antonelli',team:'Mercedes',gap:'1:33:15.607'},
+   p2:{driver:'George Russell',team:'Mercedes',gap:'+5.515'},
+   p3:{driver:'Lewis Hamilton',team:'Ferrari',gap:'+25.267'},fl:'Antonelli · 1:35.275'},
+  {rnd:3,gp:'GP do Japão',status:'done',
+   p1:{driver:'Kimi Antonelli',team:'Mercedes',gap:'Vencedor'},
+   p2:{driver:'Oscar Piastri',team:'McLaren',gap:'+13.722'},
+   p3:{driver:'Charles Leclerc',team:'Ferrari',gap:''},fl:'A confirmar'},
+];
+
+const LICENCE=[
+  {team:'Haas',color:'#B6BABD',driver:'Oliver Bearman',number:'87',pts:10,risk:'critical',expires:'Mai–Jul/2026',detail:'Grã-Bretanha, Monaco FP2, Itália, Brasil Sprint, Abu Dhabi 2025'},
+  {team:'Red Bull',color:'#3671C6',driver:'Liam Lawson',number:'30',pts:6,risk:'warning',expires:'Mai/2026',detail:'Monaco FP1, Canadá, EUA Sprint, Abu Dhabi 2025'},
+  {team:'Aston Martin',color:'#229971',driver:'Lance Stroll',number:'18',pts:6,risk:'warning',expires:'Jun/2026',detail:'Áustria, Holanda, Las Vegas 2025'},
+  {team:'Mercedes',color:'#00D2BE',driver:'Kimi Antonelli',number:'12',pts:6,risk:'warning',expires:'Jun/2026',detail:'Holanda, Áustria, Itália 2025 + China Sprint 2026'},
+  {team:'Cadillac',color:'#6692FF',driver:'Sergio Pérez',number:'11',pts:5,risk:'warning',expires:'Abr/2026',detail:'Bahrein×2, Miami Sprint, São Paulo Sprint, Abu Dhabi 2025'},
+  {team:'McLaren',color:'#FF8000',driver:'Oscar Piastri',number:'81',pts:4,risk:'moderate',expires:'Jul/2026',detail:'Brasil, Grã-Bretanha 2025'},
+  {team:'Williams',color:'#64C4FF',driver:'Carlos Sainz',number:'55',pts:4,risk:'moderate',expires:'Abr/2026',detail:'EUA, Bahrein 2025 ⚠ Expiram logo'},
+  {team:'Red Bull',color:'#3671C6',driver:'Max Verstappen',number:'1',pts:3,risk:'moderate',expires:'Jun/2026',detail:'Colisão com Russell, Espanha 2025'},
+  {team:'Ferrari',color:'#E8002D',driver:'Lewis Hamilton',number:'44',pts:3,risk:'moderate',expires:'Ago/2026',detail:'Holanda, Brasil 2025'},
+  {team:'Williams',color:'#64C4FF',driver:'Alex Albon',number:'23',pts:3,risk:'moderate',expires:'Set/2026',detail:'Azerbaijão, Las Vegas 2025'},
+  {team:'Audi',color:'#2293D1',driver:'Gabriel Bortoleto',number:'5',pts:2,risk:'low',expires:'Nov/2026',detail:'Colisão com Stroll, Las Vegas 2025'},
+  {team:'Alpine',color:'#FF87BC',driver:'Pierre Gasly',number:'10',pts:2,risk:'low',expires:'Ago/2026',detail:'Colisão com Sainz, Hungria 2025'},
+  {team:'Haas',color:'#B6BABD',driver:'Esteban Ocon',number:'31',pts:1,risk:'low',expires:'Set/2026',detail:'Forçou Stroll, Itália 2025'},
+  {team:'Ferrari',color:'#E8002D',driver:'Charles Leclerc',number:'16',pts:1,risk:'low',expires:'Jun/2026',detail:'Forçou Piastri, Áustria 2025'},
+  {team:'Mercedes',color:'#00D2BE',driver:'George Russell',number:'63',pts:0,risk:'clean',expires:'—',detail:'Sem pontos ativos'},
+  {team:'McLaren',color:'#FF8000',driver:'Lando Norris',number:'4',pts:0,risk:'clean',expires:'—',detail:'Campeão 2025'},
+  {team:'Aston Martin',color:'#229971',driver:'Fernando Alonso',number:'14',pts:0,risk:'clean',expires:'—',detail:'Sem pontos ativos'},
+  {team:'Audi',color:'#2293D1',driver:'Nico Hülkenberg',number:'27',pts:0,risk:'clean',expires:'—',detail:'Sem pontos ativos'},
+  {team:'Red Bull',color:'#3671C6',driver:'Isack Hadjar',number:'6',pts:0,risk:'clean',expires:'—',detail:'Estreante'},
+  {team:'Cadillac',color:'#6692FF',driver:'Valtteri Bottas',number:'77',pts:0,risk:'clean',expires:'—',detail:'Retorno em 2026'},
+];
+
+const CALENDAR=[
+  {rnd:1,gp:'GP da Austrália',circuit:'Albert Park, Melbourne',date:'16 Mar 2026',status:'done',pen:'Colapinto: stop-go 10s · Antonelli absolvido'},
+  {rnd:2,gp:'GP da China',circuit:'Shanghai Int. Circuit',date:'15 Mar 2026',status:'done',pen:'Antonelli +10s Sprint · Pérez +5s · Albon pit lane'},
+  {rnd:3,gp:'GP do Japão',circuit:'Suzuka Circuit',date:'29 Mar 2026',status:'done',pen:'Bearman: acidente grave (50G) · retirado · sem penalidades aplicadas'},
+  {rnd:4,gp:'GP de Miami',circuit:'Miami Int. Autodrome',date:'04 Mai 2026',status:'future',pen:''},
+  {rnd:5,gp:'GP do Canadá',circuit:'Circuit Gilles Villeneuve',date:'22 Mai 2026',status:'future',pen:''},
+  {rnd:6,gp:'GP de Mônaco',circuit:'Circuit de Monaco',date:'05 Jun 2026',status:'future',pen:''},
+  {rnd:7,gp:'GP de Espanha',circuit:'Circuit de Barcelona',date:'21 Jun 2026',status:'future',pen:''},
+  {rnd:8,gp:'GP da Áustria',circuit:'Red Bull Ring',date:'05 Jul 2026',status:'future',pen:''},
+  {rnd:9,gp:'GP da Grã-Bretanha',circuit:'Silverstone',date:'19 Jul 2026',status:'future',pen:''},
+  {rnd:10,gp:'GP da Bélgica',circuit:'Spa-Francorchamps',date:'02 Ago 2026',status:'future',pen:''},
+  {rnd:11,gp:'GP da Hungria',circuit:'Hungaroring',date:'16 Ago 2026',status:'future',pen:''},
+  {rnd:12,gp:'GP da Holanda',circuit:'Circuit Zandvoort',date:'06 Set 2026',status:'future',pen:''},
+  {rnd:13,gp:'GP da Itália',circuit:'Autodromo di Monza',date:'13 Set 2026',status:'future',pen:''},
+  {rnd:14,gp:'GP do Azerbaijão',circuit:'Baku City Circuit',date:'26 Set 2026',status:'future',pen:''},
+  {rnd:15,gp:'GP de Singapura',circuit:'Marina Bay St. Circuit',date:'04 Out 2026',status:'future',pen:''},
+  {rnd:16,gp:'GP dos EUA',circuit:'Circuit of the Americas',date:'18 Out 2026',status:'future',pen:''},
+  {rnd:17,gp:'GP do México',circuit:'Autódromo H. Rodríguez',date:'25 Out 2026',status:'future',pen:''},
+  {rnd:18,gp:'GP do Brasil',circuit:'Autódromo J.C. Pace',date:'08 Nov 2026',status:'future',pen:''},
+  {rnd:19,gp:'GP de Las Vegas',circuit:'Las Vegas Strip Circuit',date:'22 Nov 2026',status:'future',pen:''},
+  {rnd:20,gp:'GP do Qatar',circuit:'Losail Int. Circuit',date:'29 Nov 2026',status:'future',pen:''},
+  {rnd:21,gp:'GP de Abu Dhabi',circuit:'Yas Marina Circuit',date:'06 Dez 2026',status:'future',pen:''},
+  {rnd:'✕',gp:'GP do Bahrein',circuit:'Bahrain Int. Circuit',date:'CANCELADO',status:'cancelled',pen:'Conflito Oriente Médio'},
+  {rnd:'✕',gp:'GP da Arábia Saudita',circuit:'Jeddah Corniche Circuit',date:'CANCELADO',status:'cancelled',pen:'Conflito Oriente Médio'},
+];
+
+function renderPenalties(){
+  const g=document.getElementById('penGrid');g.innerHTML='';
+  PENALTIES.forEach(p=>{
+    const d=document.createElement('div');d.className='pen-card';
+    d.innerHTML=`<div class="pen-accent" style="background:${p.color}"></div>
+      <div class="pen-top"><div><div class="pen-driver">${p.driver}</div><div class="pen-team" style="color:${p.color}">${p.team} · #${p.number}</div></div><div class="pen-num">${p.number}</div></div>
+      <div class="pen-race">${p.race} · ${p.session}</div>
+      <span class="pen-badge ${p.bc}">${p.type}</span>
+      <div class="pen-reason">${p.reason}</div>
+      <div class="pen-pts"><div class="pen-pts-lbl">Licença</div><div class="pen-pts-val">${p.ptsLabel}</div></div>`;
+    g.appendChild(d);
+  });
+}
+
+function renderDrivers(){
+  const t=document.getElementById('driversTable');t.innerHTML='';
+  const max=DRIVERS[0].pts;
+  DRIVERS.forEach((d,i)=>{
+    const pct=max>0?Math.round((d.pts/max)*100):0;
+    const pc=i===0?'c1':i===1?'c2':i===2?'c3':'';
+    const row=document.createElement('div');row.className='champ-row dr';
+    row.innerHTML=`<div class="cr-rank ${i<3?'top':''}">${d.pos}</div>
+      <div class="cr-info"><div class="cr-name"><div class="dot" style="background:${d.color}"></div>${d.driver}</div><div class="cr-team">${d.team}</div>${d.note?`<div class="cr-detail">${d.note}</div>`:''}</div>
+      <div class="cr-bar"><div class="cr-bar-track"><div class="cr-bar-fill" style="width:${pct}%;background:${d.color}"></div></div><div class="cr-bar-lbl">${d.pts} pts</div></div>
+      <div class="cr-pts"><div class="cr-pts-big ${pc}">${d.pts}</div><div class="cr-pts-sub">pts</div></div>`;
+    t.appendChild(row);
+  });
+}
+
+function renderConstructors(){
+  const t=document.getElementById('ctorsTable');t.innerHTML='';
+  const max=CONSTRUCTORS[0].pts;
+  CONSTRUCTORS.forEach((c,i)=>{
+    const pct=max>0?Math.round((c.pts/max)*100):0;
+    const pc=i===0?'c1':i===1?'c2':i===2?'c3':'';
+    const row=document.createElement('div');row.className='champ-row ct';
+    row.innerHTML=`<div class="cr-rank ${i<3?'top':''}">${c.pos}</div>
+      <div class="cr-info"><div class="cr-name"><div class="dot" style="background:${c.color}"></div>${c.team}</div><div class="cr-team">${c.engine}</div><div class="ct-drivers">${c.drivers}</div></div>
+      <div class="ct-col">${c.wins}</div>
+      <div class="ct-col">${c.podiums}</div>
+      <div class="cr-bar"><div class="cr-bar-track"><div class="cr-bar-fill" style="width:${pct}%;background:${c.color}"></div></div><div class="cr-bar-lbl">${c.pts} pts</div></div>
+      <div class="cr-pts"><div class="cr-pts-big ${pc}">${c.pts}</div><div class="cr-pts-sub">pts</div></div>`;
+    t.appendChild(row);
+  });
+}
+
+function renderResults(){
+  const g=document.getElementById('resultsGrid');g.innerHTML='';
+  RESULTS.forEach(r=>{
+    const d=document.createElement('div');d.className=`gp-card ${r.status}`;
+    if(r.p1){
+      d.innerHTML=`<div class="gp-rnd">Ronda ${r.rnd}</div>
+        <div class="gp-name">${r.gp}</div>
+        <div class="gp-podium">
+          <div class="pod-row"><div class="pod-pos p1">1</div><div><div class="pod-driver">${r.p1.driver}</div><div class="pod-team">${r.p1.team}</div></div><div class="pod-gap">${r.p1.gap}</div></div>
+          <div class="pod-row"><div class="pod-pos p2">2</div><div><div class="pod-driver">${r.p2.driver}</div><div class="pod-team">${r.p2.team}</div></div><div class="pod-gap">${r.p2.gap}</div></div>
+          <div class="pod-row"><div class="pod-pos p3">3</div><div><div class="pod-driver">${r.p3.driver}</div><div class="pod-team">${r.p3.team}</div></div><div class="pod-gap">${r.p3.gap}</div></div>
+        </div>
+        <div class="gp-fl">VOLTA RÁPIDA · ${r.fl}</div>`;
+    } else {
+      d.innerHTML=`<div class="gp-rnd">Ronda ${r.rnd}</div>
+        <div class="gp-name">${r.gp}</div>
+        <div class="gp-tbc">Em andamento<br><span style="font-size:11px">29 Mar 2026 · Suzuka</span></div>`;
+    }
+    g.appendChild(d);
+  });
+}
+
+function renderLicence(){
+  const t=document.getElementById('licTable');t.innerHTML='';
+  [...LICENCE].sort((a,b)=>b.pts-a.pts).forEach((d,i)=>{
+    const pct=Math.min(Math.round((d.pts/12)*100),100);
+    const bar=d.risk==='critical'?'#c8102e':d.risk==='warning'?'#b85c00':d.risk==='moderate'?'#b8860b':'#ccc';
+    const pc=d.risk==='critical'?'c1':d.risk==='warning'?'c2':d.risk==='moderate'?'c3':'';
+    const row=document.createElement('div');row.className='champ-row dr';
+    row.innerHTML=`<div class="cr-rank ${i<3?'top':''}">${i+1}</div>
+      <div class="cr-info"><div class="cr-name"><div class="dot" style="background:${d.color}"></div>${d.driver}</div><div class="cr-team">${d.team} · #${d.number}</div><div class="cr-detail">${d.detail} · Expira ${d.expires}</div></div>
+      <div class="cr-bar"><div class="cr-bar-track"><div class="cr-bar-fill" style="width:${pct}%;background:${bar}"></div></div><div class="cr-bar-lbl">${d.pts}/12 pts</div></div>
+      <div class="cr-pts"><div class="cr-pts-big ${pc}">${d.pts}</div><div class="cr-pts-sub">pts</div></div>`;
+    t.appendChild(row);
+  });
+}
+
+function renderCalendar(){
+  const g=document.getElementById('calGrid');g.innerHTML='';
+  const sm={done:{cls:'p-done',lb:'✓ Realizado'},current:{cls:'p-live',lb:'⚡ Ao vivo'},future:{cls:'p-fut',lb:'Futuro'},cancelled:{cls:'p-can',lb:'✕ Cancelado'}};
+  CALENDAR.forEach(r=>{
+    const s=sm[r.status]||sm.future;
+    const d=document.createElement('div');d.className=`cal-card ${r.status}`;
+    d.innerHTML=`<div class="cal-rnd">Ronda ${r.rnd}</div>
+      <div class="cal-gp">${r.gp}</div>
+      <div class="cal-circuit">${r.circuit}</div>
+      <div class="cal-date">${r.date}</div>
+      <span class="pill ${s.cls}">${s.lb}</span>
+      ${r.pen?`<div class="cal-pen">${r.pen}</div>`:`<div class="cal-pen empty">Sem penalidades</div>`}`;
+    g.appendChild(d);
+  });
+}
+
+async function loadSession(){
+  const btn=document.getElementById('refreshBtn');
+  const icon=document.getElementById('refreshIcon');
+  const sd=document.getElementById('sessionData');
+  btn.disabled=true;icon.classList.add('spin');
+  try{
+    const r=await fetch('https://api.openf1.org/v1/sessions?year=2026&session_type=Race');
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    const sessions=await r.json();
+    if(!sessions||!sessions.length)throw new Error('Nenhuma sessão encontrada');
+    const last=sessions[sessions.length-1];
+    const dr=await fetch(`https://api.openf1.org/v1/drivers?session_key=${last.session_key}`);
+    const drivers=await dr.json();
+    document.getElementById('footerTxt').textContent='API OK · '+new Date().toLocaleTimeString('pt-BR');
+    sd.innerHTML=`<div class="s-row">
+      <div class="s-cell"><div class="s-lbl">Sessão</div><div class="s-val">${last.session_name||'Race'}</div><div class="s-sub">${last.country_name||'—'} · ${last.circuit_short_name||'—'}</div></div>
+      <div class="s-cell"><div class="s-lbl">Data</div><div class="s-val">${new Date(last.date_start).toLocaleDateString('pt-BR')}</div><div class="s-sub">${new Date(last.date_start).toLocaleTimeString('pt-BR')} UTC</div></div>
+      <div class="s-cell"><div class="s-lbl">Pilotos</div><div class="s-val">${drivers.length}</div><div class="s-sub">session key ${last.session_key}</div></div>
+    </div>
+    <div class="rule" style="margin-top:0"><div class="rule-lbl">Pilotos na sessão</div><div class="rule-line"></div></div>
+    <div class="dt-grid">${drivers.slice(0,20).map(d=>`<div class="dt-pill"><div class="dt-bar" style="background:${d.team_colour?'#'+d.team_colour:'#999'}"></div><div><div class="dt-name">${d.last_name||d.full_name||'—'}</div><div class="dt-meta">#${d.driver_number||'?'} · ${(d.team_name||'—').replace('Formula 1 Team','').trim()}</div></div></div>`).join('')}</div>
+    <div style="font-size:11px;color:var(--muted);margin-top:14px;line-height:1.6;font-weight:300">Penalidades são documentadas via FIA Official Documents e atualizadas após cada GP.</div>
+    <button class="btn" onclick="loadSession()" style="margin-top:12px"><span>↻</span> Atualizar</button>`;
+  }catch(e){
+    sd.innerHTML=`<div style="border:1.5px solid var(--red);padding:20px">
+      <div class="kicker" style="margin-bottom:6px">Erro de conexão</div>
+      <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;margin-bottom:8px">API indisponível</div>
+      <div style="font-size:12px;color:var(--muted);font-weight:300;margin-bottom:12px">${e.message}</div>
+      <button class="btn" onclick="loadSession()"><span>↻</span> Tentar novamente</button></div>`;
+  }
+  try{document.getElementById('refreshBtn').disabled=false;document.getElementById('refreshIcon').classList.remove('spin')}catch(x){}
+}
+
+function switchTab(n,el){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+n).classList.add('active');
+  el.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+renderPenalties();renderDrivers();renderConstructors();renderResults();renderLicence();renderCalendar();
+document.getElementById('updateDate').textContent=new Date().toLocaleDateString('pt-BR',{month:'short',year:'numeric'});
+
+// ═══════════════════════════════════════════
+// LAP TIMES — OpenF1 API
+// ═══════════════════════════════════════════
+let lapChart=null;
+let lapSessions=[];
+
+// Populate session selector on first open
+async function initLapSessions(){
+  const sel=document.getElementById('lapsSessionSelect');
+  if(lapSessions.length>0)return;
+  sel.innerHTML='<option value="">Carregando sessões...</option>';
+  try{
+    const r=await fetch('https://api.openf1.org/v1/sessions?year=2026&session_type=Race');
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    lapSessions=await r.json();
+    sel.innerHTML='<option value="">— Selecione uma corrida —</option>';
+    lapSessions.forEach(s=>{
+      const opt=document.createElement('option');
+      opt.value=s.session_key;
+      const date=new Date(s.date_start).toLocaleDateString('pt-BR',{day:'2-digit',month:'short'});
+      opt.textContent=`Rd · ${s.country_name||'—'} · ${date}`;
+      sel.appendChild(opt);
+    });
+    sel.onchange=()=>{
+      document.getElementById('lapsLoadBtn').disabled=!sel.value;
+    };
+  }catch(e){
+    sel.innerHTML='<option value="">Erro ao carregar sessões</option>';
+  }
+}
+
+function fmtLap(ms){
+  if(!ms||ms<=0)return '—';
+  const m=Math.floor(ms/60000);
+  const s=((ms%60000)/1000).toFixed(3).padStart(6,'0');
+  return `${m}:${s}`;
+}
+
+function lapToMs(t){
+  if(!t)return null;
+  const parts=t.split(':');
+  if(parts.length===2)return Math.round(parseFloat(parts[0])*60000+parseFloat(parts[1])*1000);
+  return Math.round(parseFloat(t)*1000);
+}
+
+async function loadLaps(){
+  const sel=document.getElementById('lapsSessionSelect');
+  const btn=document.getElementById('lapsLoadBtn');
+  const icon=document.getElementById('lapsIcon');
+  const container=document.getElementById('lapsData');
+  const sessionKey=sel.value;
+  if(!sessionKey)return;
+
+  btn.disabled=true;icon.classList.add('spin');
+  container.innerHTML=`<div class="laps-loading"><span class="spin" style="display:inline-block;font-size:18px">↻</span> Buscando telemetria...</div>`;
+
+  try{
+    // Fetch drivers and laps in parallel
+    const [drRes,lapRes]=await Promise.all([
+      fetch(`https://api.openf1.org/v1/drivers?session_key=${sessionKey}`),
+      fetch(`https://api.openf1.org/v1/laps?session_key=${sessionKey}`)
+    ]);
+    if(!drRes.ok||!lapRes.ok)throw new Error('Erro ao buscar dados da API');
+    const drivers=await drRes.json();
+    const laps=await lapRes.json();
+
+    if(!laps||laps.length===0)throw new Error('Nenhuma volta encontrada para esta sessão. A API pode não ter processado os dados ainda.');
+
+    // Build driver map
+    const driverMap={};
+    drivers.forEach(d=>{driverMap[d.driver_number]={name:d.last_name||d.full_name||'#'+d.driver_number,team:(d.team_name||'').replace('Formula 1 Team','').trim(),color:d.team_colour?'#'+d.team_colour:'#999',number:d.driver_number};});
+
+    // Best lap per driver
+    const bestByDriver={};
+    laps.forEach(l=>{
+      if(!l.lap_duration||l.is_pit_out_lap)return;
+      const ms=Math.round(l.lap_duration*1000);
+      if(!bestByDriver[l.driver_number]||ms<bestByDriver[l.driver_number].ms){
+        bestByDriver[l.driver_number]={ms,lap:l.lap_number,time:l.lap_duration};
+      }
+    });
+
+    // Sort by best lap
+    const ranking=Object.entries(bestByDriver)
+      .map(([num,data])=>({num,ms:data.ms,lap:data.lap,...(driverMap[num]||{name:'#'+num,team:'—',color:'#999'})}))
+      .sort((a,b)=>a.ms-b.ms);
+
+    const fastest=ranking[0]?.ms||0;
+
+    // Laps per driver for chart (only a few top drivers, max 6)
+    const topDrivers=ranking.slice(0,6).map(r=>r.num);
+    const lapsByDriver={};
+    topDrivers.forEach(num=>{lapsByDriver[num]=[];});
+    laps.forEach(l=>{
+      if(!topDrivers.includes(String(l.driver_number)))return;
+      if(!l.lap_duration||l.is_pit_out_lap||l.lap_duration>200)return;
+      lapsByDriver[l.driver_number].push({lap:l.lap_number,ms:Math.round(l.lap_duration*1000)});
+    });
+    topDrivers.forEach(num=>{lapsByDriver[num].sort((a,b)=>a.lap-b.lap);});
+
+    const maxLap=Math.max(...laps.map(l=>l.lap_number||0));
+
+    // Render
+    container.innerHTML=`
+      <div class="laps-two-col">
+        <div>
+          <div class="rule" style="margin-top:0"><div class="rule-lbl">Melhor volta por piloto</div><div class="rule-line"></div></div>
+          <div class="laps-ranking" id="lapRanking"></div>
+        </div>
+        <div>
+          <div class="rule" style="margin-top:0"><div class="rule-lbl">Evolução — top 6 pilotos</div><div class="rule-line"></div></div>
+          <div class="chart-wrap">
+            <div class="chart-title">Tempo por volta ao longo da corrida</div>
+            <div class="chart-canvas-wrap"><canvas id="lapChart"></canvas></div>
+          </div>
+        </div>
+      </div>
+      <div class="laps-note">⚠ Voltas de entrada/saída dos boxes excluídas. Pit stops aparecem como picos no gráfico. Dados via API OpenF1 — pode haver pequenas variações em relação ao tempo oficial cronometrado.</div>`;
+
+    // Render ranking
+    const rankEl=document.getElementById('lapRanking');
+    ranking.forEach((d,i)=>{
+      const gap=i===0?'—':`+${((d.ms-fastest)/1000).toFixed(3)}s`;
+      const row=document.createElement('div');
+      row.className='lap-row'+(i===0?' selected':'');
+      row.dataset.num=d.num;
+      row.onclick=()=>highlightDriver(d.num,ranking,lapsByDriver,topDrivers);
+      row.innerHTML=`<div class="lap-pos ${i<3?'top':''}">${i+1}</div>
+        <div class="lap-info">
+          <div class="lap-driver" style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:${d.color};display:inline-block;flex-shrink:0"></span>${d.name}</div>
+          <div class="lap-team">${d.team} · V${d.lap}</div>
+        </div>
+        <div class="lap-time-col">
+          <div class="lap-time${i===0?' fastest':''}">${fmtLap(d.ms)}</div>
+          <div class="lap-gap-small">${gap}</div>
+        </div>`;
+      rankEl.appendChild(row);
+    });
+
+    // Render chart
+    if(lapChart)lapChart.destroy();
+    const ctx=document.getElementById('lapChart').getContext('2d');
+    const datasets=topDrivers.map(num=>{
+      const d=driverMap[num]||{name:'#'+num,color:'#999'};
+      const data=lapsByDriver[num]||[];
+      return{
+        label:d.name,
+        data:data.map(l=>({x:l.lap,y:l.ms/1000})),
+        borderColor:d.color,
+        backgroundColor:d.color+'22',
+        borderWidth:2,
+        pointRadius:2,
+        pointHoverRadius:5,
+        tension:.3,
+        fill:false,
+      };
+    });
+
+    lapChart=new Chart(ctx,{
+      type:'line',
+      data:{datasets},
+      options:{
+        responsive:true,
+        maintainAspectRatio:false,
+        animation:{duration:600},
+        plugins:{
+          legend:{position:'bottom',labels:{font:{size:11,family:'DM Mono'},color:'#8a7f72',boxWidth:12,padding:14}},
+          tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y.toFixed(3)}s`,title:ctx=>`Volta ${ctx[0].parsed.x}`}}
+        },
+        scales:{
+          x:{type:'linear',min:1,max:maxLap,title:{display:true,text:'Volta',font:{size:10,family:'DM Mono'},color:'#8a7f72'},ticks:{font:{size:10,family:'DM Mono'},color:'#8a7f72',stepSize:5},grid:{color:'#e4dfd6'}},
+          y:{title:{display:true,text:'Tempo (s)',font:{size:10,family:'DM Mono'},color:'#8a7f72'},ticks:{font:{size:10,family:'DM Mono'},color:'#8a7f72',callback:v=>v.toFixed(1)+'s'},grid:{color:'#e4dfd6'}}
+        }
+      }
+    });
+
+  }catch(e){
+    container.innerHTML=`<div class="laps-error">
+      <div class="kicker" style="margin-bottom:6px">Erro ao carregar</div>
+      <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;margin-bottom:8px">Dados indisponíveis</div>
+      <div style="font-size:12px;color:var(--muted);font-weight:300;margin-bottom:14px">${e.message}</div>
+      <button class="laps-btn" onclick="loadLaps()"><span>↻</span> Tentar novamente</button>
+    </div>`;
+  }
+  btn.disabled=false;icon.classList.remove('spin');
+}
+
+function highlightDriver(num,ranking,lapsByDriver,topDrivers){
+  // Highlight row
+  document.querySelectorAll('.lap-row').forEach(r=>{
+    r.classList.toggle('selected',r.dataset.num===String(num));
+  });
+  // Highlight chart dataset
+  if(!lapChart)return;
+  lapChart.data.datasets.forEach((ds,i)=>{
+    const dNum=topDrivers[i];
+    lapChart.data.datasets[i].borderWidth=String(dNum)===String(num)?3:1;
+    lapChart.data.datasets[i].borderColor=String(dNum)===String(num)
+      ?lapChart.data.datasets[i].borderColor.replace(/[0-9a-f]{2}$/i,'ff')
+      :lapChart.data.datasets[i].borderColor.substring(0,7)+'55';
+  });
+  lapChart.update('none');
+}
+
+// Load sessions when laps tab is first clicked
+const origSwitch=window.switchTab;
+function switchTab(n,el){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+n).classList.add('active');
+  el.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(n==='laps')initLapSessions();
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</body>
+</html>
